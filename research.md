@@ -19,7 +19,7 @@ Na het onderzoeken van de physical-description bleek de cm waarde de breedte van
 
 ###### Visualisatie schets
 
-![visualsatie schets](https://photos.app.goo.gl/6JTQHX9gwXSf6XEr5 'Logo Title Text 1')
+![visualsatie schets](\img\IMG_20181102_124514.jpg)
 
 **3. Hoe is het kleurgebruik op de kaft van boeken de afgelopen jaren veranderd?**
 
