@@ -21,7 +21,7 @@ const obaApi = new api({
 obaApi
   .get(
     'search', {
-      q: 'music',
+      q: 'genre:erotiek',
       librarian: true,
       refine: true,
       facet: 'type(book)'
@@ -38,7 +38,9 @@ obaApi
         let newObject = {}
         // Object.values haalt de eerste waarde uit het item, [0] skipt door de array blokken en ._ is de titel die je nodig hebt
         newObject.item = Object.values(y)[0][0]._
-
+        const splitted = newObject.item.split([';'])
+        newObject.pagesize = splitted[0].replace('p', 'pagina\'s')
+        newObject.thickness = splitted[1]
         console.log(newObject)
 
         return newObject
