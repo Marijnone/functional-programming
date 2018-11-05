@@ -8,8 +8,8 @@ const app = express()
 const port = 3000
 
 const obaApi = new api({
-  url: 'https://zoeken.oba.nl/api/v1/',
-  key: process.env.PUBLIC
+	url: 'https://zoeken.oba.nl/api/v1/',
+	key: process.env.PUBLIC
 })
 
 // Search for method, params and than optional where you wanna find something
@@ -19,38 +19,41 @@ const obaApi = new api({
 // possible parameters: q, librarian, refine, sort etc. check oba api documentation for all
 // possible filterKey: any higher order key in response object, like title returns only title objects instead of full data object
 obaApi
-  .get(
-    'search', {
-      q: 'genre:erotiek',
-      librarian: true,
-      refine: true,
-      facet: 'type(book)'
-    },
-    'description'
-  )
-  .then(response => (data = response.data))
-  .then(
-    res =>
-    // Haal de waardes uit het object res en map daar overheen (de waarde is een array)
-    (result = Object.values(res).map(x => {
-      //x returned een array. daar moet overheen gemapped worden
-      x.map(y => {
-        let newObject = {}
-        // Object.values haalt de eerste waarde uit het item, [0] skipt door de array blokken en ._ is de titel die je nodig hebt
-        newObject.item = Object.values(y)[0][0]._
-        const splitted = newObject.item.split([';'])
-        newObject.pagesize = splitted[0].replace('p', 'pagina\'s')
-        newObject.thickness = splitted[1]
-        console.log(newObject)
+	.get(
+		'search',
+		{
+			q: 'genre:thriller',
+			librarian: true,
+			refine: true,
+			facet: 'type(book)'
+		},
+		'df215'
+	)
+	.then(response => (data = response.data))
+	.then(
+		res =>
+			// Haal de waardes uit het object res en map daar overheen (de waarde is een array)
+			(result = Object.values(res).map(x => {
+				//x returned een array. daar moet overheen gemapped worden
+				x.map(y => {
+					let newObject = {}
+					// Object.values haalt de eerste waarde uit het item, [0] skipt door de array blokken en ._ is de titel die je nodig hebt
+					newObject.item = Object.values(y)[0][0]._
+					const splitted = newObject.item.split([';'])
+					newObject.pagesize = splitted[0].replace('paginas', '')
+					newObject.thickness = splitted[1].replace('cm', '')
+					if (newObject.pagesize) {
+					}
+					console.log(newObject.pagesize)
 
-        return newObject
-      })
-    }))
-  )
-  .then(res => console.log(res))
+					return newObject
+				})
+			}))
+	)
+	.then(res => console.log(res))
 
-  .catch(err => console.error(err))
+	.catch(err => console.error(err))
 // Make server with the response on the port
 app.get('/', (req, res) => res.json(res)).listen(port, () =>
-  console.log(chalk.green(`Listening on port ${port}`))
+	console.log(chalk.green(`Listening on port ${port}`))
 )
