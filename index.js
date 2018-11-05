@@ -20,40 +20,55 @@ const obaApi = new api({
 // possible filterKey: any higher order key in response object, like title returns only title objects instead of full data object
 obaApi
 	.get(
-		'search',
-		{
+		'search', {
 			q: 'genre:thriller',
 			librarian: true,
 			refine: true,
 			facet: 'type(book)'
 		},
-		'df215'
+		'description'
 	)
 	.then(response => (data = response.data))
 	.then(
 		res =>
-			// Haal de waardes uit het object res en map daar overheen (de waarde is een array)
-			(result = Object.values(res).map(x => {
-				//x returned een array. daar moet overheen gemapped worden
-				x.map(y => {
-					let newObject = {}
-					// Object.values haalt de eerste waarde uit het item, [0] skipt door de array blokken en ._ is de titel die je nodig hebt
-					newObject.item = Object.values(y)[0][0]._
-					const splitted = newObject.item.split([';'])
-					newObject.pagesize = splitted[0].replace('paginas', '')
-					newObject.thickness = splitted[1].replace('cm', '')
-					if (newObject.pagesize) {
-					}
-					console.log(newObject.pagesize)
+		// Haal de waardes uit het object res en map daar overheen (de waarde is een array)
+		(result = Object.values(res).map(x =>
+			//x returned een array. daar moet overheen gemapped worden
+			x.map(y => {
+				let newObject = {}
+				// Object.values haalt de eerste waarde uit het item, [0] skipt door de array blokken en ._ is de titel die je nodig hebt
+				newObject.item = Object.values(y)[0][0]._
+				const splitted = newObject.item.split([';'])
+				newObject.pagesize = splitted[0]
+				// console.log(splitted);
+				// console.log(newObject.pagesize);
 
-					return newObject
-				})
-			}))
+				try {
+					newObject.pagesize = (newObject.pagesize.match(/\[?(\d+)\]?[\w\s]*(?:p|pagina's|bladen)/)[1])
+				} catch {
+					newObject.pagesize = 0;
+				}
+
+				if (newObject.pagesize == 0 || isNaN(newObject.pagesize)) {
+					delete Newobject
+				}
+				console.log(newObject.pagesize)
+
+				// (splitted.match(/\[?(\d+)\]?[\w\s]*(?:p|pagina's|bladen)/)[1]);
+				// } catch (error) {
+				// 	console.log('Dit is ging er fout', error);
+
+				// }
+
+				console.log(newObject.pagesize)
+
+				return newObject
+			})
+		))
 	)
-	.then(res => console.log(res))
 
 	.catch(err => console.error(err))
 // Make server with the response on the port
-app.get('/', (req, res) => res.json(res)).listen(port, () =>
+app.get('/', (req, res) => res.json(result)).listen(port, () =>
 	console.log(chalk.green(`Listening on port ${port}`))
 )
