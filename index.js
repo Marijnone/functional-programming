@@ -42,10 +42,13 @@ obaApi
 				newObject.pagesize = splitted[0]
 				// console.log(splitted);
 				// console.log(newObject.pagesize);
-
+				//thanks Daniel for the awesome Regex to cleanup the data
 				try {
+
 					newObject.pagesize = (newObject.pagesize.match(/\[?(\d+)\]?[\w\s]*(?:p|pagina's|bladen)/)[1])
-				} catch {
+				} catch (err) {
+					console.log(err);
+
 					newObject.pagesize = 0;
 				}
 
@@ -54,18 +57,9 @@ obaApi
 				}
 				console.log(newObject.pagesize)
 
-				// (splitted.match(/\[?(\d+)\]?[\w\s]*(?:p|pagina's|bladen)/)[1]);
-				// } catch (error) {
-				// 	console.log('Dit is ging er fout', error);
-
-				// }
-
-				console.log(newObject.pagesize)
 
 				return newObject
-			})
-		))
-	)
+			}))))
 
 	.catch(err => console.error(err))
 // Make server with the response on the port
