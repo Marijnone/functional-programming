@@ -21,7 +21,7 @@ const obaApi = new api({
 obaApi
 	.get(
 		'search', {
-			q: 'genre:erotiek',
+			q: 'genre:thriller',
 			librarian: true,
 			refine: true,
 			facet: 'type(book)'
@@ -51,6 +51,7 @@ obaApi
 		bookPagesFiltered.forEach((boek, index) => {
 			bookPagesFiltered[index].description = Number(boek.description.replace(/ .*/, ''))
 		})
+		console.log(bookPagesFiltered);
 
 		return bookPagesFiltered
 	})
