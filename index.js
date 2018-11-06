@@ -27,11 +27,11 @@ obaApi
 			facet: 'type(book)'
 		}
 		// ,
-		// 'description'
+		// 'description' //Filter is not needed 
 	)
 
 	.then(response => {
-		console.log(response)
+		// console.log(response)
 		let results = response.data.aquabrowser.results[0].result
 		return results.map(book => {
 			return {
@@ -41,83 +41,32 @@ obaApi
 			}
 		})
 	})
-	.then(reponse => {
-		try {
-			response.description = response.description.match(
-				/\[?(\d+)\]?[\w\s]*(?:p|pagina's|bladen)/
-			)[1]
-		} catch (err) {
-			console.log(err)
-			response.description = 0
-		}
+	//Credits naar Dennis voor de goeie uiteg
+	//nieuwe const met bookpage filtered zet hem gelijk aan response 
+	//book pagesFiltered.forEach ((oek, index.description))
+	//regex: https://stackoverflow.com/questions/18558417/get-first-word-of-string
 
-		if (response.description == 0 || isNaN(response.description)) {
-			delete response.description
-		}
-		// console.log(reponse)
-		// return response
+	.then(response => {
+		const bookPagesFiltered = response
+		bookPagesFiltered.forEach((boek, index) => {
+			bookPagesFiltered[index].description = Number(boek.description.replace(/ .*/, ''))
+		})
+
+		return bookPagesFiltered
 	})
-
-	.then(
-		res =>
-		// Haal de waardes uit het object res en map daar overheen (de waarde is een array)
-		(result = Object.values(res).map(x => {
-			//x returned een array. daar moet overheen gemapped worden
-
-			let y = x[0]
-			// console.log(y);
-
-
-			let newObject = {}
-			// Object.values haalt de eerste waarde uit het item, [0] skipt door de array blokken en ._ is de titel die je nodig hebt
-			newObject.item = Object.values(y)[0][0]._
-			const splitted = newObject.item.split([';'])
-			newObject.pagesize = splitted[0]
-
-
-			// console.log(splitted);
-			// console.log(newObject.pagesize);
-			//thanks Daniel for the awesome Regex to cleanup the data
-			try {
-				newObject.pagesize = newObject.pagesize.match(
-					/\[?(\d+)\]?[\w\s]*(?:p|pagina's|bladen)/
-				)[1]
-			} catch (err) {
-				console.log(err)
-				newObject.pagesize = 0
+	.then(response => {
+		app.get('/', (req, res) => res.json(response)).listen(port, () =>
+			console.log(chalk.green(`Listening on port ${port}`)))
+		//write file with error handeling
+		fs.writeFile('../json/numberOfPages.json', JSON.stringify(response), 'utf8', err => {
+			if (err) {
+				console.log('Write file ging fout', err)
+				return
+			} else {
+				return response
 			}
-
-			if (newObject.pagesize == 0 || isNaN(newObject.pagesize)) {
-				delete newObject.pagesize
-			}
-			//console.log({
-			// 	size: newObject.pagesize
-			// })
-			//return 
-
-			return {
-				//i would like this function dynamic 
-				genre: 'erotiek',
-				size: Number(newObject.pagesize)
-			}
-		}))
-	)
-	.then(newObject => {
-		// console.log(newObject);
-		//
-		(filteredData = newObject)
-		//console.log(filteredData);
-
-		let average = filteredData
-
-		fs.writeFile('../json/numberOfPages.json', JSON.stringify(filteredData), 'utf8',
-			err => console.log('Write file ging fout', err)
-
-		)
+		})
 	})
 
 	.catch(err => console.error(chalk.red('doet het niet', err)))
 // Make server with the response on the port
-app.get('/', (req, res) => res.json(filteredData)).listen(port, () =>
-	console.log(chalk.green(`Listening on port ${port}`))
-)
