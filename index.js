@@ -6,7 +6,7 @@ const express = require('express')
 const jp = require('jsonpath')
 const app = express()
 const port = 3000
-
+const fs = require('fs')
 const obaApi = new api({
 	url: 'https://zoeken.oba.nl/api/v1/',
 	key: process.env.PUBLIC
@@ -21,7 +21,7 @@ const obaApi = new api({
 obaApi
 	.get(
 		'search', {
-			q: 'genre:thriller',
+			q: 'genre:erotiek',
 			librarian: true,
 			refine: true,
 			facet: 'type(book)'
@@ -32,37 +32,46 @@ obaApi
 	.then(
 		res =>
 		// Haal de waardes uit het object res en map daar overheen (de waarde is een array)
-		(result = Object.values(res).map(x =>
+		(result = Object.values(res).map(x => {
 			//x returned een array. daar moet overheen gemapped worden
-			x.map(y => {
-				let newObject = {}
-				// Object.values haalt de eerste waarde uit het item, [0] skipt door de array blokken en ._ is de titel die je nodig hebt
-				newObject.item = Object.values(y)[0][0]._
-				const splitted = newObject.item.split([';'])
-				newObject.pagesize = splitted[0]
-				// console.log(splitted);
-				// console.log(newObject.pagesize);
-				//thanks Daniel for the awesome Regex to cleanup the data
-				try {
+			let y = x[0]
 
-					newObject.pagesize = (newObject.pagesize.match(/\[?(\d+)\]?[\w\s]*(?:p|pagina's|bladen)/)[1])
-				} catch (err) {
-					console.log(err);
+			let newObject = {}
+			// Object.values haalt de eerste waarde uit het item, [0] skipt door de array blokken en ._ is de titel die je nodig hebt
+			newObject.item = Object.values(y)[0][0]._
+			const splitted = newObject.item.split([';'])
+			newObject.pagesize = splitted[0]
 
-					newObject.pagesize = 0;
-				}
+			// console.log(splitted);
+			// console.log(newObject.pagesize);
+			//thanks Daniel for the awesome Regex to cleanup the data
+			try {
+				newObject.pagesize = newObject.pagesize.match(
+					/\[?(\d+)\]?[\w\s]*(?:p|pagina's|bladen)/
+				)[1]
+			} catch (err) {
+				console.log(err)
+				newObject.pagesize = 0
+			}
 
-				if (newObject.pagesize == 0 || isNaN(newObject.pagesize)) {
-					delete Newobject
-				}
-				console.log(newObject.pagesize)
+			if (newObject.pagesize == 0 || isNaN(newObject.pagesize)) {
+				delete newObject.pagesize
+			}
+			// console.log(newObject.pagesize)
+			//return 
+			return newObject.pagesize
+		}))
+	)
+	.then(newObject => {
+		console.log(newObject);
+		console.log(newObject.Genre);
 
+		(filteredData = newObject)
 
-				return newObject
-			}))))
+	})
 
-	.catch(err => console.error(err))
+	.catch(err => console.error('doet het niet'))
 // Make server with the response on the port
-app.get('/', (req, res) => res.json(result)).listen(port, () =>
+app.get('/', (req, res) => res.json(filteredData)).listen(port, () =>
 	console.log(chalk.green(`Listening on port ${port}`))
 )

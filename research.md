@@ -17,6 +17,8 @@
 
 Na het onderzoeken van de physical-description bleek de cm waarde de breedte van het boek te zijn. ik heb mn deel vraag dus aangepast. Ik ben nu bezig met schrijven van een functie waarmee ik het aantal pagina's uit de api kan halen. Dit staat vaak als "323 p" in de data. Op het moment loop ik tegen het schoonmaken van de data aan. Hiermee ben ik gisteren de hele dag bezig geweest. Met hulp van @timruiterkamp ben ik een stuk verder gekomen.
 
+Ik krijg nu de data schoon terug door een regex expressie, thanks to Daniel.
+
 ###### Visualisatie schets
 
 ![visualsatie schets](.\img\IMG_20181102_124514.jpg)
