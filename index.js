@@ -25,22 +25,55 @@ obaApi
 			librarian: true,
 			refine: true,
 			facet: 'type(book)'
-		},
-		'description'
+		}
+		// ,
+		// 'description'
 	)
-	.then(response => (data = response.data))
+
+	.then(response => {
+		console.log(response)
+		let results = response.data.aquabrowser.results[0].result
+		return results.map(book => {
+			return {
+				title: book.titles[0].title[0]['_'],
+				description: book.description[0]['physical-description'][0]._,
+				publication: book.publication[0].year[0]['_']
+			}
+		})
+	})
+	.then(reponse => {
+		try {
+			response.description = response.description.match(
+				/\[?(\d+)\]?[\w\s]*(?:p|pagina's|bladen)/
+			)[1]
+		} catch (err) {
+			console.log(err)
+			response.description = 0
+		}
+
+		if (response.description == 0 || isNaN(response.description)) {
+			delete response.description
+		}
+		// console.log(reponse)
+		// return response
+	})
+
 	.then(
 		res =>
 		// Haal de waardes uit het object res en map daar overheen (de waarde is een array)
 		(result = Object.values(res).map(x => {
 			//x returned een array. daar moet overheen gemapped worden
+
 			let y = x[0]
+			// console.log(y);
+
 
 			let newObject = {}
 			// Object.values haalt de eerste waarde uit het item, [0] skipt door de array blokken en ._ is de titel die je nodig hebt
 			newObject.item = Object.values(y)[0][0]._
 			const splitted = newObject.item.split([';'])
 			newObject.pagesize = splitted[0]
+
 
 			// console.log(splitted);
 			// console.log(newObject.pagesize);
@@ -57,20 +90,33 @@ obaApi
 			if (newObject.pagesize == 0 || isNaN(newObject.pagesize)) {
 				delete newObject.pagesize
 			}
-			// console.log(newObject.pagesize)
+			//console.log({
+			// 	size: newObject.pagesize
+			// })
 			//return 
-			return newObject.pagesize
+
+			return {
+				//i would like this function dynamic 
+				genre: 'erotiek',
+				size: Number(newObject.pagesize)
+			}
 		}))
 	)
 	.then(newObject => {
-		console.log(newObject);
-		console.log(newObject.Genre);
-
+		// console.log(newObject);
+		//
 		(filteredData = newObject)
+		//console.log(filteredData);
 
+		let average = filteredData
+
+		fs.writeFile('../json/numberOfPages.json', JSON.stringify(filteredData), 'utf8',
+			err => console.log('Write file ging fout', err)
+
+		)
 	})
 
-	.catch(err => console.error('doet het niet'))
+	.catch(err => console.error(chalk.red('doet het niet', err)))
 // Make server with the response on the port
 app.get('/', (req, res) => res.json(filteredData)).listen(port, () =>
 	console.log(chalk.green(`Listening on port ${port}`))
