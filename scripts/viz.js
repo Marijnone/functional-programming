@@ -3,41 +3,46 @@ d3.json('/json/numberOfpages.json').then(function (data) {
 
 
 
-    var svg = d3.select('#canvas')
+    const svg = d3.select('body')
         .append('svg')
         .attr('width', '100%')
-        .attr('height', '100%')
+        .attr('height', 20 * data.length)
 
 
+    // const x = d3
+    //     .scaleLinear()
+    //     .domain([0, ])
+    //     .range([0, 800])
 
-    svg.selectAll("rect")
+
+    const bar = svg
+        .selectAll('g')
         .data(data)
+        .enter()
+        .append('g')
+        .attr('transform', function (d, i) {
+            console.log(d)
+            return 'translate(0,' + i * 20 + ')'
+        })
 
+    bar.append('rect')
+        .attr('width', d => d.description)
+        // add this attribute to change the color of the rect
+        .attr('fill', function (d) {
+            return 'red'
+        })
+        .attr('height', 20 - 1)
 
-    // var bar = svg.selectAll('rect')
+    // svg.selectAll("rect")
+
     //     .data(data)
-    // // console.log(data.description);
-    // bar.enter()
-    //     .append('rect')
-    //     .attr('y', 50)
-    //     .attr("x", function (d, i) {
-    //         return i * 60;
-    //     })
-    //     .attr('width', (d => d.description))
-    //     .attr('height', 40)
-    //     .attr('fill', 'brown')
-
-    svg.selectAll("rect")
-        .data(data)
-        .enter().append("rect")
-        .attr("height", "250")
-        .attr("width", "40")
-        // .attr("x", function (d, i) {
-        //     return i * 60;
-        // })
-        .attr('x', (d, i) => i * 60)
-        .attr("y", "50");
-
+    //     .enter().append("rect")
+    //     .attr("height", 150)
+    //     .attr("width", (d => d.description))
+    //     .attr('x', (d, i) => (i * 60) + 25)
+    //     .attr("y", 20)
+    //     // .attr("class", "bar")
+    //     .attr("fill", "red")
 
 
 
