@@ -37,7 +37,8 @@ obaApi
 			return {
 				title: book.titles[0].title[0]['_'],
 				description: book.description[0]['physical-description'][0]._,
-				publication: book.publication[0].year[0]['_']
+				publication: book.publication[0].year[0]['_'],
+				subject: book.subjects ? book.subjects[0]['topical-subject'][0]._ : "no subject",
 			}
 		})
 	})
