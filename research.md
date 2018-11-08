@@ -20,7 +20,17 @@ Na het onderzoeken van de physical-description bleek de cm waarde de breedte van
 
 Ik krijg nu de data schoon terug door een regex expressie, thanks to Daniel.
 
-Mijn code leek te werken maar ik vond het zelf lastig het begrip functional programming te doorgronden. Omdat ik hier meer over wilde weten ben ik het boek "Mastering Javascript Functional Programming" gaan lezen. Dit is beschikbaar via de O'reilly website. De code die in het boek wordt behandeld is vrij geavanceerd maar wordt goed en duidelijk uitgelegd. De uitleg over de map functie heeft mij veel geholpen. Ik heb mijn code wat functioneler gemaakt door boven in de code het object te maken en het object hierna door een opschoon functie te halen.
+Mijn code leek te werken maar ik vond het zelf lastig het begrip functional programming te doorgronden. Omdat ik hier meer over wilde weten ben ik het boek "Mastering Javascript Functional Programming" gaan lezen. Dit is beschikbaar via de O'reilly website. De code die in het boek wordt behandeld is vrij geavanceerd maar wordt goed en duidelijk uitgelegd. De uitleg over de map functie heeft mij veel geholpen. Ik heb mijn code wat functioneler gemaakt door boven in de code het object te maken en het object. Hierna door een opschoon functie te halen. Ik liep tegen het maken van de schaal aan na het lezen van dit medium artikel en het volgen van Udemy course werd dat een stuk duidelijker:
+
+##### Hulp & Bronnen
+
+[Freecodecamp article](https://medium.freecodecamp.org/a-gentle-introduction-to-d3-how-to-build-a-reusable-bubble-chart-9106dc4f6c46)
+
+[Udemy course](https://www.udemy.com/masteringd3js)
+
+[Functional programming book](https://www.safaribooksonline.com/library/view/mastering-javascript-functional/9781787287440/68705aac-6c78-42fb-8f88-3635de5819d2.xhtml)
+
+##### Proces
 
 ###### Visualisatie schets
 
