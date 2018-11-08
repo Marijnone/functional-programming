@@ -6,6 +6,7 @@
     color: #fff;
     border-radius: 2px;
     pointer-events: none;
+    font-family: system-ui;
 }
 
 /* Creates a small triangle extender for the tooltip */

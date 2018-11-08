@@ -3,17 +3,21 @@ const svg = d3.select("#chart-area")
     .attr("width", "900")
     .attr("height", "400");
 
-
-const tip = d3.tip().attr('class', 'd3-tip')
-    .html(function (d) {
-        return d;
-        var text = "<strong>Boek:</strong> <span style='color:red'>" + d.title + "</span><br>";
-        var text = "<strong>Genre/Onderwerp:</strong> <span style='color:red'>" + d.subjects + "</span><br>";
-        return text;
-    })
-svg.call(tip)
-
 d3.json('/json/numberOfpages.json').then(function (data) {
+
+    const tip = d3.tip().attr('class', 'd3-tip')
+        .html(function (d) {
+            console.log(d)
+
+            var text = "<strong>Boek:</strong> <span style='color:red'>" + d.title + "</span><br>";
+            text += "<strong>Genre/Onderwerp:</strong> <span style='color:red'>" + d.subject + "</span><br>";
+            text += "<strong>Aantal paginas:</strong> <span style='color:red'>" + d.description + "</span><br>";
+            text += "<strong>Publicatie Jaar:</strong> <span style='color:red'>" + d.publication + "</span><br>";
+
+
+            return text;
+        });
+    svg.call(tip)
 
     data.forEach(function (d) {});
     const x = d3.scaleLinear()
@@ -60,14 +64,6 @@ d3.json('/json/numberOfpages.json').then(function (data) {
         .on('mouseover', tip.show)
         .on('mouseout', tip.hide);
 
-
-
-
 })
-
-
-
-
-
 
 // <rect x="0" y="" width="20" height="50" fill="red">
