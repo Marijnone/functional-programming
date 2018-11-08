@@ -16,11 +16,40 @@
 -   In welk jaar zijn de dunste boeken uitgekomen?
 -   Welk genre bevat gemiddeld de meeste pagina's
 
+### Proces
+
 Na het onderzoeken van de physical-description bleek de cm waarde de breedte van het boek te zijn. ik heb mn deel vraag dus aangepast. Ik ben nu bezig met schrijven van een functie waarmee ik het aantal pagina's uit de api kan halen. Dit staat vaak als "323 p" in de data. Op het moment loop ik tegen het schoonmaken van de data aan. Hiermee ben ik gisteren de hele dag bezig geweest. Met hulp van @timruiterkamp ben ik een stuk verder gekomen.
 
 Ik krijg nu de data schoon terug door een regex expressie, thanks to Daniel.
 
-Mijn code leek te werken maar ik vond het zelf lastig het begrip functional programming te doorgronden. Omdat ik hier meer over wilde weten ben ik het boek "Mastering Javascript Functional Programming" gaan lezen. Dit is beschikbaar via de O'reilly website. De code die in het boek wordt behandeld is vrij geavanceerd maar wordt goed en duidelijk uitgelegd. De uitleg over de map functie heeft mij veel geholpen. Ik heb mijn code wat functioneler gemaakt door boven in de code het object te maken en het object. Hierna door een opschoon functie te halen. Ik liep tegen het maken van de schaal aan na het lezen van dit medium artikel en het volgen van Udemy course werd dat een stuk duidelijker:
+Mijn code leek te werken maar ik vond het zelf lastig het begrip functional programming te doorgronden. Omdat ik hier meer over wilde weten ben ik het boek "Mastering Javascript Functional Programming" gaan lezen. Dit is beschikbaar via de O'reilly website. De code die in het boek wordt behandeld is vrij geavanceerd maar wordt goed en duidelijk uitgelegd. De uitleg over de map functie heeft mij veel geholpen. Ik heb mijn code wat functioneler gemaakt door boven in de code het object te maken en het object.
+
+```javascript
+    let results = response.data.aquabrowser.results[0].result
+
+		return results.map(book => {
+
+			return {
+
+				title: book.titles[0].title[0]['_'],
+
+				description: book.description[0]['physical-description'][0]._,
+
+				publication: book.publication[0].year[0]['_'],
+
+				subject: book.subjects ? book.subjects[0]['topical-subject'][0]._ : "no subject",
+
+			}
+
+		})
+
+	})
+
+```
+
+Hierna door een opschoon functie te halen.
+
+Ik liep tegen het maken van de schaal aan na het lezen van dit medium artikel en het volgen van Udemy course werd dat een stuk duidelijker. Ik blijf het lastig vinden om bepaalde veranderingen te kunnen verklaren. D3 Heeft zoveel mogelijkheden en ik heb veel tijd gestoken in het positioneren van de boeken. Dit is nog niet helemaal gelukt. Hierna ben ik verder gegaan met het maken van een tooltip. Wanneer iemand met zijn muis op een boek gaat staan moet deze meer informatie geven over het boek. Dit is gelukt
 
 ##### Hulp & Bronnen
 
@@ -30,7 +59,7 @@ Mijn code leek te werken maar ik vond het zelf lastig het begrip functional prog
 
 [Functional programming book](https://www.safaribooksonline.com/library/view/mastering-javascript-functional/9781787287440/68705aac-6c78-42fb-8f88-3635de5819d2.xhtml)
 
-##### Proces
+totaal aantal pagina's
 
 ###### Visualisatie schets
 

@@ -13,8 +13,6 @@ d3.json('/json/numberOfpages.json').then(function (data) {
             text += "<strong>Genre/Onderwerp:</strong> <span style='color:red'>" + d.subject + "</span><br>";
             text += "<strong>Aantal paginas:</strong> <span style='color:red'>" + d.description + "</span><br>";
             text += "<strong>Publicatie Jaar:</strong> <span style='color:red'>" + d.publication + "</span><br>";
-
-
             return text;
         });
     svg.call(tip)
