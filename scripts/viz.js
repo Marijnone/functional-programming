@@ -1,29 +1,34 @@
-d3.json('/json/numberOfpages.json').then(function (data) {
+d3.json('/json/numberOfpages.json').then(function (dataset) {
+
+    console.log(dataset.description);
 
 
+    var svgWidth = 500,
+        svgHeight = 300,
+        barPadding = 5;
+    var barWidth = (svgWidth / dataset.length);
 
+    var svg = d3.select('svg')
+        .attr("width", svgWidth)
+        .attr("height", svgHeight);
 
-    const svg = d3.select('#canvas')
-        .append('svg')
-        .attr('width', '100%')
-        .attr('height', '100%')
+    var barChart = svg.selectAll("rect")
+        .data(dataset)
+    console.log(dataset.description)
 
-
-
-    const x = d3
-        .scaleLinear()
-        .domain([0, ])
-        .range([0, 800])
-
-    svg.selectAll("rect")
-
-        .data(data)
-        .enter().append("rect")
-        .attr("height", 150)
-        .attr("width", (d => d.description))
-        .attr('x', (d, i) => (i * 60) + 15)
-        .attr("y", 20)
-        .attr("fill", "red")
+        .enter()
+        .append("rect")
+        .attr("y", function (d) {
+            return svgHeight - d
+        })
+        .attr("height", function (d) {
+            return d;
+        })
+        .attr("width", dataset.description - barPadding)
+        .attr("transform", function (d, i) {
+            var translate = [barWidth * i, 0];
+            return "translate(" + translate + ")";
+        });
 
 
 
