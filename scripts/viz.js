@@ -3,7 +3,7 @@ const svg = d3.select("#chart-area")
     .attr("width", "900")
     .attr("height", "400");
 
-d3.json('/json/numberOfpages.json').then(function (data) {
+d3.json('../json/numberOfPages.json').then(function (data) {
 
     const tip = d3.tip().attr('class', 'd3-tip')
         .html(function (d) {

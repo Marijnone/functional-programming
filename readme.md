@@ -91,7 +91,7 @@ In de tweede week heb ik veel geleerd over het simpeler maken van m'n code waar 
 
 #### Resultaat
 
-Dit is het uiteindelijke resultaat van de visualisatie, 
+Dit is het uiteindelijke resultaat van de dikte van 19 boeken in het genre Thriller.
 
 ![visualsatie schets](./img/bookshelf.PNG)
 
