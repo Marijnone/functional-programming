@@ -1,6 +1,7 @@
 ## Functional Programming
 
 Dit is mijn readme over het vak FP, hierin beschrijf ik mijn onderzoek en het proces
+[Live demo](https://boekenplank.netlify.com/)
 
 ### Onderzoeks vragen:
 

@@ -5,6 +5,11 @@ const svg = d3.select("#chart-area")
 
 d3.json('./json/numberOfPages.json').then(function (data) {
 
+
+    let t = d3.transition()
+        .duration(750)
+        .ease(d3.easeLinear);
+
     const tip = d3.tip().attr('class', 'd3-tip')
         .html(function (d) {
             // console.log(d)
@@ -59,6 +64,19 @@ d3.json('./json/numberOfPages.json').then(function (data) {
             // return "grey";
         })
         .on('mouseover', tip.show)
-        .on('mouseout', tip.hide);
+        .on('mouseout', tip.hide)
+    // .on('mouseover', function () {
+    //     d3.selectAll(svg)
+    //         .selectAll("rect")
+    //         .style("height", '3em')
+    // })
+    // .on('mouseout', function () {
+    //     d3.selectAll(svg)
+    //         .selectAll("rect")
+    //         .style("height", '1em')
+    // })
+
+
+
 
 })
