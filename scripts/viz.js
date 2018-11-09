@@ -7,7 +7,7 @@ d3.json('/json/numberOfpages.json').then(function (data) {
 
     const tip = d3.tip().attr('class', 'd3-tip')
         .html(function (d) {
-            console.log(d)
+            // console.log(d)
 
             var text = "<strong>Boek:</strong> <span style='color:red'>" + d.title + "</span><br>";
             text += "<strong>Genre/Onderwerp:</strong> <span style='color:red'>" + d.subject + "</span><br>";
@@ -46,7 +46,6 @@ d3.json('/json/numberOfpages.json').then(function (data) {
         .enter().append("rect")
         .attr("y", 0)
         .attr("x", function (d, i) {
-            // console.log(i)
             return (i * 40);
         })
         //return the width of the books with d.description = nummber of pages
@@ -57,11 +56,9 @@ d3.json('/json/numberOfpages.json').then(function (data) {
             return 60;
         })
         .attr("fill", function (d) {
-            return "grey";
+            // return "grey";
         })
         .on('mouseover', tip.show)
         .on('mouseout', tip.hide);
 
 })
-
-// <rect x="0" y="" width="20" height="50" fill="red">
