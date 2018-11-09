@@ -93,9 +93,9 @@ In de tweede week heb ik veel geleerd over het simpeler maken van m'n code waar 
 
 Dit is het uiteindelijke resultaat van de dikte van 19 boeken in het genre Thriller.
 
-![visualsatie schets](./img/bookshelf.PNG)
+![resul](./img/bookshelf.PNG)
 
-
+![resul](./img/bookshelftooltip.PNG)
 #### Hulp & Bronnen:
 
 [Freecodecamp article](https://medium.freecodecamp.org/a-gentle-introduction-to-d3-how-to-build-a-reusable-bubble-chart-9106dc4f6c46)
